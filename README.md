@@ -6,7 +6,7 @@ This project consists of a Chrome extension and a server, both containerized usi
 
 To install the Chrome extension, follow these steps:
 
-1. Clone the repository: `git clone https://github.com/your-username/chrome-extension-server.git`
+1. Clone the repository: `git clone https://github.com/AdamSchmidty/Fluentify.git`
 2. Install the dependencies: `npm install`
 3. Build the extension: `npm run build:extension`
 4. Open Google Chrome and navigate to `chrome://extensions`
@@ -16,7 +16,7 @@ To install the Chrome extension, follow these steps:
 To run the server, follow these steps:
 
 1. Build the server Docker image: `docker build -t server .`
-2. Run the server container: `docker run -p 8080:8080 server`
+2. Run the server container: `docker run -p 3000:3000 server`
 
 ## Usage
 
