@@ -1,4 +1,4 @@
-# Chrome Extension and Server Project
+# Fluentify
 
 This project consists of a Chrome extension and a server, both containerized using Docker, and bundled using Webpack.
 
