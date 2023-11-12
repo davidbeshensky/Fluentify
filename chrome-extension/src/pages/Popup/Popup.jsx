@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import './Popup.css';
@@ -55,10 +55,6 @@ const retrieveLanguageDecks = (lang) => {
 
 const SettingsPage = () => {
 
-  const handleSelectedLangChange = (change) => {
-
-  }
-
 
   const [selectedDeckLang, setSelectedLang] = useState("English");
 
@@ -72,7 +68,6 @@ const SettingsPage = () => {
         <FormControlLabel control={<Switch defaultChecked />} label="Highlight Definitions" />
       </FormGroup>
       <SexyFuckingForm />
-
     </div>
   )
 }
@@ -104,7 +99,7 @@ const handleStartStopChange = () => {
       "value": "spanish",
       "label": "spanish"
     }]);
-    localStorage.setItem(`deck_${lang}`, JSON.stringify(defaultItem));
+    // localStorage.setItem(`deck_${lang}`, JSON.stringify(defaultItem));
 
     return (defaultItem);
   }
@@ -115,8 +110,29 @@ const Popup = () => {
 
   const [selectedLang, setSelectedLang] = useState("English");
   const [settings, setSettings] = useState(false);
+  const [activate, setActivate] = useState(false);
 
   const toggleSettings = () => setSettings(!settings);
+
+
+  useEffect(() => {
+    if (activate === false){
+      setActivate(false);
+    }
+    const dataToStore = ['car', 'automobile', 'apple', 'banana'];
+    const language = 'ja';
+
+    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+      chrome.tabs.sendMessage(tabs[0].id, {
+        action: 'storeData',
+        data: dataToStore,
+        language: language,
+        activate: false
+      });
+    });
+    return () => window.removeEventListener('storage');
+  }, []);
+
 
   if (settings) {
     return (
@@ -126,6 +142,20 @@ const Popup = () => {
       </div>
     )
   }
+
+ const deactivate = () => {
+  setActivate(!activate);
+  const dataToStore = ['car', 'automobile', 'apple', 'banana'];
+    const language = 'ja';
+    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+      chrome.tabs.sendMessage(tabs[0].id, {
+        action: 'storeData',
+        data: dataToStore,
+        language: language,
+        activate: activate
+      });
+    });
+ }
 
   return (
     <div>
@@ -138,6 +168,7 @@ const Popup = () => {
       <FormGroup>
         <FormControlLabel control={<Switch defaultChecked onChange={handleStartStopChange} />} label="Stop/Start" />
       </FormGroup>
+      <button onClick={deactivate}>deactivate</button>
 
     </div>
 

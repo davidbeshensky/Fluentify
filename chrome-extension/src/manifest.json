@@ -13,6 +13,7 @@
   "icons": {
     "128": "icon-128.png"
   },
+  "permissions": ["nativeMessaging"],
   "content_scripts": [
     {
       "matches": [
