@@ -2,10 +2,13 @@ import 'dotenv/config';
 import express from 'express';
 import translateRoute from './routes/translateRoute';
 import dictionaryRoute from './routes/dictionaryRoute';
+import cors from 'cors'; // Import the cors middleware
 
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+// allow CORS
+app.use(cors());
 
 const PORT = 8080;
 
