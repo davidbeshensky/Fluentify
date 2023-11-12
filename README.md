@@ -16,7 +16,7 @@ To install the Chrome extension, follow these steps:
 To run the server, follow these steps:
 
 1. Build the server Docker image: `docker build -t server .`
-2. Run the server container: `docker run -p 3000:3000 server`
+2. Run the server container: `docker run -p 8080:8080 server`
 
 ## Usage
 
