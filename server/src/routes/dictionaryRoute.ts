@@ -33,12 +33,14 @@ interface DictionaryEntry {
 /*
 This API endpoint is used to get the dictionary entry of a word.
 Request
-POST http://localhost8080/getDictionaryEntry
+POST http://localhost:8080/dictionary
 Content-Type: application/json
 
 Body: 
 {
     "word": "hello"
+    "source_lang": "en",
+    "target_lang": "ja"
 }
 */
 
