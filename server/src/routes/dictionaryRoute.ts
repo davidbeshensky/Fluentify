@@ -1,9 +1,12 @@
 import 'dotenv/config';
 import express from 'express';
 import axios from 'axios';
+import * as deepl from 'deepl-node';
+
 
 const router = express.Router();
-
+const authKey = process.env.DEEPL_API_KEY ?? '';
+const translator = new deepl.Translator(authKey);
 
 interface Phonetic {
     text: string;
@@ -22,16 +25,15 @@ interface Definition {
 
 interface DictionaryEntry {
     word: string;
-    phonetic: string;
-    phonetics: Phonetic[];
-    origin: string;
-    meanings: Definition[];
+    translated: string;
+    language: string;
+    meanings: any;
 }
 
 /*
 This API endpoint is used to get the dictionary entry of a word.
 Request
-POST http://localhost:3000/getDictionaryEntry
+POST http://localhost8080/getDictionaryEntry
 Content-Type: application/json
 
 Body: 
@@ -41,34 +43,38 @@ Body:
 */
 
 router.post('/', async (req, res) => {
-    const { word } = req.body;
+    let { word, source_lang, target_lang } = req.body;
 
-    if (!word) {
-        return res.status(400).json({ error: 'Missing "word" parameter in the request body' });
+
+
+    if (!word || !target_lang) {
+        return res.status(400).json({ error: 'Missing parameters in the request body' });
+    }
+    if (!source_lang) {
+        source_lang = 'en-US';
     }
 
     try {
+        const result = await translator.translateText(word, source_lang, target_lang);
+        const translatedText = result;
         // Make a request to the Dictionary API
         const response = await axios.get(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`);
 
         // Extract relevant information from the API response
         const formattedResponse: DictionaryEntry = {
             word: response.data[0].word,
-            phonetic: response.data[0].phonetic || '', // Assuming phonetic is always present
-            phonetics: response.data[0].phonetics.map((phonetic: Phonetic) => ({
-                text: phonetic.text,
-                audio: phonetic.audio || '',
-            })),
-            origin: response.data[0].origin || '',
-            meanings: response.data[0].meanings.map((meaning: Definition) => ({
-                partOfSpeech: meaning.partOfSpeech,
-                definitions: meaning.definitions.map((definition) => ({
-                    definition: definition.definition,
-                    example: definition.example,
-                    synonyms: definition.synonyms || [],
-                    antonyms: definition.antonyms || [],
-                })),
-            })),
+            translated: Array.isArray(translatedText) ? translatedText[0].text : translatedText.text,
+            language: target_lang,
+            meanings: {
+                partOfSpeech: response.data[0].meanings[0].partOfSpeech,
+                definitions: [
+                    {
+                        definition: response.data[0].meanings[0].definitions[0].definition,
+                        synonyms: [],
+                        antonyms: [],
+                    },
+                ],
+            },
         };
 
         res.status(200).json(formattedResponse);

@@ -11,7 +11,7 @@ const translator = new deepl.Translator(authKey);
 /* 
 This API endpoint is used to translate text from one language to another.
 Request
-POST http://localhost:3000/translate
+POST http://localhost:8080/translate
 Content-Type: application/json
 
 Body: 
