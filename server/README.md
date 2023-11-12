@@ -25,8 +25,8 @@ Before you begin, ensure you have the following installed on your machine:
 `docker build -t server .`
 
 2. Run the Docker container:
-`docker run -p 3000:3000 server`
+`docker run -p 8080:8080 server`
 
-3. Access the Server at localhost:3000
+3. Access the Server at localhost:8080
 
 
