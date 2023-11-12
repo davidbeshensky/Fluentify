@@ -38,6 +38,7 @@ Before you begin, ensure you have the following installed on your machine:
 2. Set up Artifact Registry and Artifact Repository 
 
 3. Run docker build and push to Artifact Registry, buildx is a special way to build dockerfile with both arm64 and amd so that GCP doesn't [freakout](https://cloud.google.com/kubernetes-engine/docs/how-to/build-multi-arch-for-arm)
+
 `docker buildx build --platform linux/amd64,linux/arm64 -t ${REGION}-docker.pkg.dev/${PROJECT_ID}/server/server:v6 . --push`
 
 4. Deploy the docker image to GKE, pulling latest image from Artifact Registry (this can be automated through CodeBuild pipeline)
