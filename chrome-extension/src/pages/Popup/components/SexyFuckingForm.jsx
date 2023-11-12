@@ -16,7 +16,6 @@ const SexyFuckingForm = () => {
     const handleSubmit = (event) => {
         event.preventDefault();
         console.log('Form submitted with values:', values);
-        // Add your form submission logic here
     };
 
     return (
@@ -24,16 +23,8 @@ const SexyFuckingForm = () => {
             <input
                 type="text"
                 name="firstName"
-                placeholder="First Name"
+                placeholder="Add Word"
                 value={values.firstName}
-                onChange={handleChange}
-                style={inputStyle}
-            />
-            <input
-                type="text"
-                name="lastName"
-                placeholder="Last Name"
-                value={values.lastName}
                 onChange={handleChange}
                 style={inputStyle}
             />

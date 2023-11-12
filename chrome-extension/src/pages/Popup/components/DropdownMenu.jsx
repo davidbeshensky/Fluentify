@@ -6,7 +6,7 @@ import Select from 'react-select'
 
 const DropdownMenu = ({ options }) => {
     const [selected, setSelectOption] = useState("");
-
+    //Pass this to props
 
     const handleSelectChange = (selectedOption) => {
         setSelectOption(selectedOption.value);
