@@ -1,4 +1,5 @@
 # Fluentify
+A project built for UW Madison MadHacks 2023 which placed top 6 - contributors were David Beshensky, Adam Schmidt, Steven Lai, and Samyak Jain.
 
 This project consists of a Chrome extension and a server, both containerized using Docker, and bundled using Webpack.
 
